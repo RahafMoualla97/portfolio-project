@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "=> Checking database connection..."
+echo "=> Starting FastAPI application..."
 
 # If DATABASE_URL is set, skip the database wait check
 if [ -n "$DATABASE_URL" ]; then
@@ -13,7 +13,7 @@ else
     echo "=> Database is ready!"
 fi
 
-# Run migrations only once
+# Run migrations by passing DATABASE_URL directly (important!)
 echo "=> Running database migrations..."
 alembic upgrade head
 
