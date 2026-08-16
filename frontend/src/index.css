@@ -9,8 +9,15 @@
   }
 }
 
-/* ✅ Custom fix: Preserve line breaks in admin text areas */
-.admin-textarea {
+/* ✅ GLOBAL FIX: Preserve line breaks and spacing for ALL textareas in the admin panel */
+textarea {
   white-space: pre-wrap !important;
-  line-height: 1.7 !important;
+  line-height: 1.6 !important;
+  overflow-y: auto !important;
+}
+
+/* Optional: Improve readability for all long text inputs */
+input, textarea, select {
+  font-size: 0.95rem !important;
+  letter-spacing: 0.01em !important;
 }
