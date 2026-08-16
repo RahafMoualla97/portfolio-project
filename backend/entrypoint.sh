@@ -13,10 +13,6 @@ else
     echo "=> Database is ready!"
 fi
 
-# Run migrations by passing DATABASE_URL directly (important!)
-echo "=> Running database migrations..."
-alembic upgrade head
-
 # Start the FastAPI app
 PORT=${PORT:-8000}
 echo "=> Starting FastAPI application on port $PORT..."
