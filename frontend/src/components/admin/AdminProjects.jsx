@@ -134,6 +134,7 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
     title: project?.title || '',
     description: project?.description || '',
     problem_solved: project?.problem_solved || '',
+    key_features: project?.key_features || '',  // ✅ NEW FIELD ADDED
   });
   const [loading, setLoading] = useState(false);
   const [projectId, setProjectId] = useState(project?.id || null);
@@ -218,6 +219,19 @@ const ProjectForm = ({ project, onSave, onCancel }) => {
           onChange={handleChange}
           rows="2"
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
+
+      {/* ✅ NEW FIELD: Key Features */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Key Features</label>
+        <textarea
+          name="key_features"
+          value={formData.key_features}
+          onChange={handleChange}
+          rows="6"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 admin-textarea"
+          placeholder="Write the key features here... (use Enter for new lines)"
         />
       </div>
 
