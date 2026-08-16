@@ -1,0 +1,275 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { getProjects } from '../api/projects';
+import { getSkillCategories, getSkills } from '../api/skills';
+import { getProfile } from '../api/profile';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCode,
+  faDatabase,
+  faServer,
+  faCloud,
+  faCogs,
+  faLaptopCode,
+  faBrain,
+  faRocket,
+  faGlobe,
+  faMobileAlt,
+  faPalette,
+  faChartLine,
+  faArrowRight,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faPython,
+  faJs,
+  faReact,
+  faDocker,
+  faGithub,
+  faLinkedin,
+  faTwitter,
+  faNodeJs,
+  faJava,
+  faPhp,
+  faVuejs,
+  faAngular,
+  faAws,
+} from '@fortawesome/free-brands-svg-icons';
+
+const iconMap = {
+  FaCode: faCode,
+  FaDatabase: faDatabase,
+  FaServer: faServer,
+  FaCloud: faCloud,
+  FaCogs: faCogs,
+  FaLaptopCode: faLaptopCode,
+  FaBrain: faBrain,
+  FaRocket: faRocket,
+  FaGlobe: faGlobe,
+  FaMobileAlt: faMobileAlt,
+  FaPalette: faPalette,
+  FaChartLine: faChartLine,
+  FaPython: faPython,
+  FaJs: faJs,
+  FaReact: faReact,
+  FaDocker: faDocker,
+  FaGithub: faGithub,
+  FaLinkedin: faLinkedin,
+  FaTwitter: faTwitter,
+  FaNodeJs: faNodeJs,
+  FaJava: faJava,
+  FaPhp: faPhp,
+  FaVuejs: faVuejs,
+  FaAngular: faAngular,
+  FaAws: faAws,
+};
+
+/**
+ * Home page component - Displays hero section, latest projects, and skills.
+ */
+const Home = () => {
+  const [projects, setProjects] = useState([]);
+  const [skillCategories, setSkillCategories] = useState([]);
+  const [allSkills, setAllSkills] = useState([]);
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [projectsData, categoriesData, skillsData, profileData] = await Promise.all([
+          getProjects(),
+          getSkillCategories(),
+          getSkills(),
+          getProfile().catch(() => null),
+        ]);
+        setProjects(projectsData.slice(0, 3));
+        setSkillCategories(categoriesData);
+        setAllSkills(skillsData);
+        setProfile(profileData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const getSkillsByCategory = (categoryId) => {
+    return allSkills.filter((skill) => skill.skill_category_id === categoryId);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-gray-600 dark:text-gray-400 text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen dark:bg-gray-900">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 py-12 sm:py-16 md:py-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+            {profile?.profile_image && (
+              <div className="flex-shrink-0">
+                <img
+                  src={profile.profile_image}
+                  alt="Rahaf Moualla"
+                  className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-indigo-600 shadow-xl"
+                />
+              </div>
+            )}
+            
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-gray-100">
+                Hi, I'm <span className="text-indigo-600">Rahaf</span>
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-4 md:mb-6">
+                {profile?.title || 'Python Backend Developer | Odoo ERP Developer | FastAPI | REST APIs'}
+              </p>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                {profile?.bio || 'Turning ideas into powerful applications.'}
+              </p>
+              <div className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-start">
+                <Link
+                  to="/projects"
+                  className="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-700 transition flex items-center gap-2 text-sm sm:text-base"
+                >
+                  View Projects <FontAwesomeIcon icon={faArrowRight} />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="bg-white text-indigo-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg border border-indigo-600 hover:bg-indigo-50 transition text-sm sm:text-base"
+                >
+                  Contact Me
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Projects */}
+      <section className="py-12 sm:py-16 bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-0">Latest Projects</h2>
+            <Link to="/projects" className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition flex items-center gap-1 text-sm sm:text-base">
+              View All <FontAwesomeIcon icon={faArrowRight} className="text-xs sm:text-sm" />
+            </Link>
+          </div>
+          
+          {projects.length === 0 ? (
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">No projects yet.</div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {projects.map((project) => (
+                <Link
+                  key={project.id}
+                  to={`/projects/${project.id}`}
+                  className="bg-gray-50 dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition group"
+                >
+                  {project.images && project.images.length > 0 ? (
+                    <img
+                      src={project.images[0].url}
+                      alt={project.title}
+                      className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-40 sm:h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-500 text-sm">
+                      No Image
+                    </div>
+                  )}
+                  <div className="p-3 sm:p-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100">{project.title}</h3>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{project.description}</p>
+                    <span className="inline-block mt-2 sm:mt-3 text-indigo-600 dark:text-indigo-400 text-xs sm:text-sm font-medium">
+                      View Project →
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      {skillCategories.length > 0 && (
+        <section className="py-12 sm:py-16 bg-gray-50 dark:bg-gray-800">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="space-y-8">
+              {skillCategories.filter((cat) => cat.parent_id === null).map((category, index) => (
+                <div key={category.id}>
+                  {/* Main Category Title */}
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+                    {category.icon && iconMap[category.icon] && (
+                      <FontAwesomeIcon icon={iconMap[category.icon]} className="mr-2 text-indigo-600 dark:text-indigo-400" />
+                    )}
+                    {category.name}
+                  </h2>
+                  
+                  {/* Sub-categories with skills - displayed in separate cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    {category.children && category.children.length > 0 ? (
+                      category.children.map((sub) => (
+                        <div key={sub.id} className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 sm:p-6 hover:shadow-lg transition border border-gray-100 dark:border-gray-600">
+                          <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 flex items-center">
+                            {sub.icon && iconMap[sub.icon] && (
+                              <FontAwesomeIcon icon={iconMap[sub.icon]} className="mr-2 text-indigo-500 dark:text-indigo-400" />
+                            )}
+                            {sub.name}
+                          </h3>
+                          <ul className="list-disc list-inside space-y-1">
+                            {getSkillsByCategory(sub.id).map((skill) => (
+                              <li key={skill.id} className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 flex items-center">
+                                {skill.icon && iconMap[skill.icon] && (
+                                  <FontAwesomeIcon icon={iconMap[skill.icon]} className="mr-1 text-indigo-400 dark:text-indigo-400" />
+                                )}
+                                {skill.name}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 sm:p-6 border border-gray-100 dark:border-gray-600">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">No sub-categories yet.</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Separator between main categories (except last) */}
+                  {index < skillCategories.filter((cat) => cat.parent_id === null).length - 1 && (
+                    <hr className="my-8 border-gray-300 dark:border-gray-600" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      <section className="py-12 sm:py-16 bg-indigo-600 dark:bg-indigo-800">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4">Have a Project in Mind?</h2>
+          <p className="text-indigo-100 dark:text-indigo-200 text-base sm:text-lg mb-6 sm:mb-8">
+            Let's work together to build something amazing.
+          </p>
+          <Link
+            to="/contact"
+            className="bg-white text-indigo-600 px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-indigo-50 transition font-semibold inline-block text-sm sm:text-base"
+          >
+            Get In Touch
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Home;
