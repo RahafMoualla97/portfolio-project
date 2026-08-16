@@ -68,7 +68,8 @@ const ProjectDetails = () => {
                 key={video.id}
                 src={video.url}
                 controls
-                className="rounded-lg w-full h-40 sm:h-48 object-cover"
+                className="rounded-lg w-full h-40 sm:h-48 object-contain bg-black"
+                style={{ maxHeight: '300px', aspectRatio: 'auto' }}
               />
             ))}
           </div>

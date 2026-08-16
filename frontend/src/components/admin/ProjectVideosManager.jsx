@@ -96,8 +96,9 @@ const ProjectVideosManager = ({ projectId, sectionId, onUpdate }) => {
             <div key={video.id} className="relative group">
               <video
                 src={video.url}
-                className="w-full h-24 object-cover rounded-lg"
+                className="w-full h-32 object-contain rounded-lg bg-black"
                 controls
+                style={{ maxHeight: '240px', aspectRatio: 'auto' }}
               />
               <button
                 onClick={() => handleDeleteVideo(video.id)}
