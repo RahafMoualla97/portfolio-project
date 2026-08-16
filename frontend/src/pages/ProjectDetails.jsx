@@ -74,17 +74,21 @@ const ProjectDetails = () => {
           </div>
         )}
 
-        {/* Description */}
+        {/* Description (مع whitespace-pre-line) */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 sm:p-6 mb-6">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Description</h2>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{project.description}</p>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 whitespace-pre-line">
+            {project.description}
+          </p>
         </div>
 
-        {/* Problem Solved */}
+        {/* Problem Solved (مع whitespace-pre-line) */}
         {project.problem_solved && (
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 sm:p-6 mb-6">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Problem Solved</h2>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{project.problem_solved}</p>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 whitespace-pre-line">
+              {project.problem_solved}
+            </p>
           </div>
         )}
 
@@ -125,13 +129,15 @@ const ProjectDetails = () => {
           </div>
         )}
 
-        {/* Sections */}
+        {/* Sections (مع whitespace-pre-line للأوصاف) */}
         {project.sections && project.sections.length > 0 && (
           <div className="space-y-4 sm:space-y-6">
             {project.sections.map((section) => (
               <div key={section.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 sm:p-6">
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100">{section.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2">{section.description}</p>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2 whitespace-pre-line">
+                  {section.description}
+                </p>
                 
                 {/* Section Images */}
                 {section.images && section.images.length > 0 && (
