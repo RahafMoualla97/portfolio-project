@@ -36,8 +36,10 @@ app.include_router(messages.router, prefix="/api", tags=["Messages"])
 
 @app.on_event("startup")
 def startup_event():
-    db = next(get_db())
-    crud.create_admin_user(db)
+    # Disabled because we create tables manually via Neon
+    # db = next(get_db())
+    # crud.create_admin_user(db)
+    pass
 
 
 @app.get("/")
