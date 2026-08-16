@@ -97,7 +97,7 @@ const ProjectImagesManager = ({ projectId, sectionId, onUpdate }) => {
               <img
                 src={image.url}
                 alt={image.alt_text || 'Project image'}
-                className="w-full h-24 object-cover rounded-lg"
+                className="w-full h-32 object-contain rounded-lg"
               />
               <button
                 onClick={() => handleDeleteImage(image.id)}

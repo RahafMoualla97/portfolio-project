@@ -91,7 +91,7 @@ const Projects = () => {
                   <img
                     src={project.images[0].url}
                     alt={project.title}
-                    className="w-full h-40 sm:h-48 object-cover"
+                    className="w-full h-40 sm:h-48 object-contain"
                   />
                 ) : (
                   <div className="w-full h-40 sm:h-48 bg-gray-200 dark:bg-gray-700"></div>
