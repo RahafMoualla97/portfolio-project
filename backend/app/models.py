@@ -139,6 +139,7 @@ class SkillCategory(Base):
     __tablename__ = "skill_categories"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), unique=True, nullable=False)
+    slug = Column(String(100), unique=True, nullable=False)
     icon = Column(String(100), nullable=True)
     order = Column(Integer, default=0)
     parent_id = Column(Integer, ForeignKey('skill_categories.id', ondelete='CASCADE'), nullable=True)
