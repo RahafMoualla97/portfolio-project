@@ -112,9 +112,9 @@ const iconMap = {
   FaPython: faPython,
   FaJs: faJs,
   FaReact: faReact,
-  faDocker: faDocker,
-  faGithub: faGithub,
-  faLinkedin: faLinkedin,
+  FaDocker: faDocker,
+  FaGithub: faGithub,
+  FaLinkedin: faLinkedin,
   faTwitter: faTwitter,
   faNodeJs: faNodeJs,
   faJava: faJava,
@@ -300,18 +300,34 @@ const Home = () => {
           <div className="max-w-6xl mx-auto px-4">
             <div className="space-y-8">
               {skillCategories.map((category, index) => (
-                <div key={category.id}>
-                  {/* Main Category Title */}
+                <div key={category.id} className="bg-white rounded-xl shadow-md p-4 sm:p-6 hover:shadow-lg transition border border-gray-100 dark:border-gray-600">
                   <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
                     {category.icon && iconMap[category.icon] && (
                       <FontAwesomeIcon icon={iconMap[category.icon]} className="mr-2 text-indigo-600 dark:text-indigo-400" />
                     )}
                     {category.name}
                   </h2>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {category.children && category.children.length > 0 ? (
-                      category.children.map((sub) => (
+
+                  {/* Skills directly under this category */}
+                  {category.skills && category.skills.length > 0 && (
+                    <div className="mb-4">
+                      <ul className="list-disc list-inside ml-6 space-y-1">
+                        {category.skills.map((skill) => (
+                          <li key={skill.id} className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 flex items-center">
+                            {skill.icon && iconMap[skill.icon] && (
+                              <FontAwesomeIcon icon={iconMap[skill.icon]} className="mr-1 text-indigo-400 dark:text-indigo-400" />
+                            )}
+                            {skill.name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Sub-categories with skills */}
+                  {category.children && category.children.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                      {category.children.map((sub) => (
                         <div key={sub.id} className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 sm:p-6 hover:shadow-lg transition border border-gray-100 dark:border-gray-600">
                           <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 flex items-center">
                             {sub.icon && iconMap[sub.icon] && (
@@ -334,17 +350,8 @@ const Home = () => {
                             )}
                           </ul>
                         </div>
-                      ))
-                    ) : (
-                      <div className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 sm:p-6 border border-gray-100 dark:border-gray-600">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">No sub-categories yet.</p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Separator between main categories (except last) */}
-                  {index < skillCategories.length - 1 && (
-                    <hr className="my-8 border-gray-300 dark:border-gray-600" />
+                      ))}
+                    </div>
                   )}
                 </div>
               ))}
