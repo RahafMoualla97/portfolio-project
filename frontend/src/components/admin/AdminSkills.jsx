@@ -160,17 +160,6 @@ const AdminSkills = () => {
         getSkills(),
       ]);
 
-      const allFlattened = [];
-      const flattenCategories = (cats) => {
-        for (const cat of cats) {
-          allFlattened.push(cat);
-          if (cat.children && cat.children.length > 0) {
-            flattenCategories(cat.children);
-          }
-        }
-      };
-      flattenCategories(categoriesData);
-
       setCategories(categoriesData);
       setSkills(skillsData);
     } catch (error) {
@@ -239,17 +228,9 @@ const AdminSkills = () => {
   };
 
   const getCategoryName = (id) => {
-    const findCat = (cats) => {
-      for (const cat of cats) {
-        if (cat.id === id) return cat.name;
-        if (cat.children && cat.children.length > 0) {
-          const found = findCat(cat.children);
-          if (found) return found;
-        }
-      }
-      return null;
-    };
-    return findCat(categories) || 'None';
+    const cat = categories.find((c) => c.id === id);
+    if (cat) return cat.name;
+    return 'None';
   };
 
   const flattenForDropdown = (cats, result = []) => {
@@ -371,8 +352,6 @@ const AdminSkills = () => {
                   <option value="FaVuejs">FaVuejs</option>
                   <option value="FaAngular">FaAngular</option>
                   <option value="FaAws">FaAws</option>
-                  <option value="FaApple">FaApple</option>
-                  <option value="FaAndroid">FaAndroid</option>
                   <option value="FaBootstrap">FaBootstrap</option>
                   <option value="FaGitlab">FaGitlab</option>
                   <option value="FaLinux">FaLinux</option>
@@ -441,6 +420,22 @@ const AdminSkills = () => {
                   </button>
                 </div>
               </div>
+
+              {/* Skills directly under this category */}
+              {cat.skills && cat.skills.length > 0 && (
+                <ul className="list-disc list-inside ml-6 mt-1 space-y-1">
+                  {cat.skills.map((skill) => (
+                    <li key={skill.id} className="text-sm text-gray-600">
+                      {skill.icon && iconMap[skill.icon] && (
+                        <FontAwesomeIcon icon={iconMap[skill.icon]} className="mr-1 text-indigo-400" />
+                      )}
+                      {skill.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* Sub-categories (if any) */}
               {cat.children && cat.children.length > 0 && (
                 <div className="mt-3 ml-6 border-l-2 border-gray-200 pl-4 space-y-3">
                   {cat.children.map((sub) => (
@@ -468,7 +463,8 @@ const AdminSkills = () => {
                           </button>
                         </div>
                       </div>
-                      {sub?.skills && Array.isArray(sub.skills) && sub.skills.length > 0 && (
+                      {/* Skills under sub-category */}
+                      {sub.skills && sub.skills.length > 0 && (
                         <ul className="list-disc list-inside ml-6 mt-1 space-y-1">
                           {sub.skills.map((skill) => (
                             <li key={skill.id} className="text-sm text-gray-600">
