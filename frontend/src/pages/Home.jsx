@@ -82,7 +82,7 @@ const Home = () => {
           getSkills(),
           getProfile().catch(() => null),
         ]);
-        setProjects(projectsData.slice(0, 3));
+        setProjects(projectsData.slice(0, 3)); // ✅ تم تعديل الشرط هنا
         setSkillCategories(categoriesData);
         setAllSkills(skillsData);
         setProfile(profileData);

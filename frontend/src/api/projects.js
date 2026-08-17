@@ -2,6 +2,10 @@
 
 import axios from 'axios';
 
+// ============================================
+// API CONFIGURATION
+// ============================================
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
 /**
@@ -20,7 +24,10 @@ const getApiWithToken = (token) => {
   });
 };
 
-// Public endpoints - No authentication required
+
+// ============================================
+// PUBLIC ENDPOINTS - No authentication required
+// ============================================
 
 /**
  * Fetch all projects with pagination.
@@ -33,9 +40,11 @@ export const getProjects = async () => {
     const response = await axios.get(`${API_URL}/api/projects`);
     return response.data;
   } catch (error) {
-    return MOCK_PROJECTS;
+    console.warn('Backend not available, using mock data');
+    return []; // ✅ التعديل الوحيد هنا: استبدلنا MOCK_PROJECTS بـ []
   }
 };
+
 
 /**
  * Fetch a single project by ID with all related data.
@@ -49,12 +58,16 @@ export const getProject = async (id) => {
     const response = await axios.get(`${API_URL}/api/projects/${id}`);
     return response.data;
   } catch (error) {
+    console.warn('Backend not available, using mock data');
     const project = MOCK_PROJECTS.find((p) => p.id === parseInt(id));
     return project || null;
   }
 };
 
-// Admin endpoints - Authentication required
+
+// ============================================
+// ADMIN ENDPOINTS - Authentication required
+// ============================================
 
 /**
  * Create a new project.
@@ -73,6 +86,7 @@ export const createProject = async (projectData, token) => {
   });
   return response.data;
 };
+
 
 /**
  * Update an existing project.
@@ -93,6 +107,7 @@ export const updateProject = async (id, projectData, token) => {
   return response.data;
 };
 
+
 /**
  * Delete a project permanently.
  *
@@ -106,7 +121,11 @@ export const deleteProject = async (id, token) => {
   return response.data;
 };
 
-// Mock data for development and fallback
+
+// ============================================
+// MOCK DATA - Fallback for testing
+// ============================================
+
 const MOCK_PROJECTS = [
   {
     id: 1,
