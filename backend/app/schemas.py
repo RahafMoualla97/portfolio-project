@@ -256,6 +256,7 @@ class SkillCategoryResponse(SkillCategoryBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
     children: List['SkillCategoryResponse'] = []
+    skills: List['SkillResponse'] = []
 
     class Config:
         from_attributes = True

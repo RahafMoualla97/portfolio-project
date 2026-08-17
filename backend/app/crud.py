@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import desc
 from . import models, schemas
 from .auth import get_password_hash
@@ -336,9 +336,14 @@ def get_skill_category(db: Session, category_id: int):
 
 
 def get_all_skill_categories(db: Session):
-    categories = db.query(models.SkillCategory).order_by(models.SkillCategory.order).all()
-    for category in categories:
-        category.skills = db.query(models.Skill).filter(models.Skill.skill_category_id == category.id).order_by(models.Skill.order).all()
+    """
+    Retrieve all skill categories with their nested skills.
+    Ordered by the 'order' field.
+    """
+    categories = db.query(models.SkillCategory).options(
+        joinedload(models.SkillCategory.skills)
+    ).order_by(models.SkillCategory.order).all()
+    
     return categories
 
 
