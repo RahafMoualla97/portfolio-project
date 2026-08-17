@@ -63,9 +63,6 @@ const iconMap = {
   FaAws: faAws,
 };
 
-/**
- * Home page component - Displays hero section, latest projects, and skills.
- */
 const Home = () => {
   const [projects, setProjects] = useState([]);
   const [skillCategories, setSkillCategories] = useState([]);
@@ -82,7 +79,29 @@ const Home = () => {
           getSkills(),
           getProfile().catch(() => null),
         ]);
-        setProjects(Array.isArray(projectsData) ? projectsData.slice(0, 3) : []);
+
+        const latestPerCategory = [];
+        const seenCategories = new Set();
+
+        const sortedProjects = [...projectsData].sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+
+        for (const project of sortedProjects) {
+          if (project.categories && project.categories.length > 0) {
+            for (const category of project.categories) {
+              if (!seenCategories.has(category.id)) {
+                seenCategories.add(category.id);
+                latestPerCategory.push({
+                  ...project,
+                  categoryName: category.name,
+                });
+              }
+            }
+          }
+        }
+
+        setProjects(latestPerCategory);
         setSkillCategories(categoriesData);
         setAllSkills(skillsData);
         setProfile(profileData);
@@ -109,7 +128,6 @@ const Home = () => {
 
   return (
     <div className="min-h-screen dark:bg-gray-900">
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 py-12 sm:py-16 md:py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
@@ -152,7 +170,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Latest Projects */}
       <section className="py-12 sm:py-16 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8">
@@ -186,6 +203,11 @@ const Home = () => {
                   <div className="p-3 sm:p-4">
                     <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100">{project.title}</h3>
                     <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{project.description}</p>
+                    {project.categoryName && (
+                      <span className="inline-block mt-1 text-xs text-indigo-600 dark:text-indigo-400">
+                        📁 {project.categoryName}
+                      </span>
+                    )}
                     <span className="inline-block mt-2 sm:mt-3 text-indigo-600 dark:text-indigo-400 text-xs sm:text-sm font-medium">
                       View Project →
                     </span>
@@ -197,14 +219,12 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Skills Section */}
       {skillCategories.length > 0 && (
         <section className="py-12 sm:py-16 bg-gray-50 dark:bg-gray-800">
           <div className="max-w-6xl mx-auto px-4">
             <div className="space-y-8">
               {skillCategories.filter((cat) => cat.parent_id === null).map((category, index) => (
                 <div key={category.id}>
-                  {/* Main Category Title */}
                   <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
                     {category.icon && iconMap[category.icon] && (
                       <FontAwesomeIcon icon={iconMap[category.icon]} className="mr-2 text-indigo-600 dark:text-indigo-400" />
@@ -212,7 +232,6 @@ const Home = () => {
                     {category.name}
                   </h2>
                   
-                  {/* Sub-categories with skills - displayed in separate cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {category.children && category.children.length > 0 ? (
                       category.children.map((sub) => (
@@ -242,7 +261,6 @@ const Home = () => {
                     )}
                   </div>
 
-                  {/* Separator between main categories (except last) */}
                   {index < skillCategories.filter((cat) => cat.parent_id === null).length - 1 && (
                     <hr className="my-8 border-gray-300 dark:border-gray-600" />
                   )}
@@ -253,7 +271,6 @@ const Home = () => {
         </section>
       )}
 
-      {/* CTA Section */}
       <section className="py-12 sm:py-16 bg-indigo-600 dark:bg-indigo-800">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4">Have a Project in Mind?</h2>
