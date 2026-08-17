@@ -160,10 +160,10 @@ const AdminSkills = () => {
         getSkills(),
       ]);
 
-      const allCategories = [];
+      const allFlattened = [];
       const flattenCategories = (cats) => {
         for (const cat of cats) {
-          allCategories.push(cat);
+          allFlattened.push(cat);
           if (cat.children && cat.children.length > 0) {
             flattenCategories(cat.children);
           }
@@ -171,7 +171,7 @@ const AdminSkills = () => {
       };
       flattenCategories(categoriesData);
 
-      setCategories(allCategories);
+      setCategories(categoriesData);
       setSkills(skillsData);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -239,9 +239,27 @@ const AdminSkills = () => {
   };
 
   const getCategoryName = (id) => {
-    const cat = categories.find((c) => c.id === id);
-    if (cat) return cat.name;
-    return 'None';
+    const findCat = (cats) => {
+      for (const cat of cats) {
+        if (cat.id === id) return cat.name;
+        if (cat.children && cat.children.length > 0) {
+          const found = findCat(cat.children);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+    return findCat(categories) || 'None';
+  };
+
+  const flattenForDropdown = (cats, result = []) => {
+    for (const cat of cats) {
+      result.push(cat);
+      if (cat.children && cat.children.length > 0) {
+        flattenForDropdown(cat.children, result);
+      }
+    }
+    return result;
   };
 
   if (loading) {
@@ -395,7 +413,7 @@ const AdminSkills = () => {
         )}
 
         <div className="grid gap-3">
-          {categories.filter((c) => c.parent_id === null).map((cat) => (
+          {categories.map((cat) => (
             <div key={cat.id} className="bg-white rounded-xl shadow-md p-4">
               <div className="flex justify-between items-center">
                 <div>
@@ -423,9 +441,9 @@ const AdminSkills = () => {
                   </button>
                 </div>
               </div>
-              {categories.filter((c) => c.parent_id === cat.id).length > 0 && (
+              {cat.children && cat.children.length > 0 && (
                 <div className="mt-3 ml-6 border-l-2 border-gray-200 pl-4 space-y-3">
-                  {categories.filter((c) => c.parent_id === cat.id).map((sub) => (
+                  {cat.children.map((sub) => (
                     <div key={sub.id} className="py-1">
                       <div className="flex justify-between items-center">
                         <span className="text-sm font-medium text-gray-700">
@@ -469,37 +487,6 @@ const AdminSkills = () => {
             </div>
           ))}
         </div>
-
-        {categories.filter((c) => c.parent_id !== null).length > 0 && (
-          <div className="mt-6">
-            <h4 className="text-sm font-semibold text-gray-600 mb-2">All Sub-Categories</h4>
-            {categories.filter((c) => c.parent_id !== null).map((sub) => (
-              <div key={sub.id} className="bg-gray-50 rounded-lg p-3 mb-2 flex justify-between items-center">
-                <span className="text-sm text-gray-700">
-                  {sub.icon && iconMap[sub.icon] && (
-                    <FontAwesomeIcon icon={iconMap[sub.icon]} className="mr-2 text-indigo-500" />
-                  )}
-                  {sub.name} <span className="text-xs text-gray-400">(Parent: {getCategoryName(sub.parent_id)})</span>
-                </span>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setEditingCategory(sub);
-                      setCategoryForm(sub);
-                      setShowCategoryForm(true);
-                    }}
-                    className="text-blue-600 hover:text-blue-800 text-sm"
-                  >
-                    Edit
-                  </button>
-                  <button onClick={() => handleDeleteCategory(sub.id)} className="text-red-600 hover:text-red-800 text-sm">
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
 
       <div>
@@ -570,7 +557,7 @@ const AdminSkills = () => {
                   <option value="FaBook">FaBook</option>
                   <option value="FaFileCode">FaFileCode</option>
                   <option value="FaWind">FaWind</option>
-                  <option value="FaGitAlt">FaGitAlt</option>
+                  <option value="faGitAlt">faGitAlt</option>
                   <option value="FaPaperPlane">FaPaperPlane</option>
                   <option value="FaUsers">FaUsers</option>
                   <option value="FaBookOpen">FaBookOpen</option>
@@ -605,7 +592,7 @@ const AdminSkills = () => {
                   required
                 >
                   <option value="">Select Category</option>
-                  {categories.map((cat) => (
+                  {flattenForDropdown(categories).map((cat) => (
                     <option key={cat.id} value={cat.id}>{cat.name}</option>
                   ))}
                 </select>
