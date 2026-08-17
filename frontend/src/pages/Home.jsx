@@ -323,14 +323,18 @@ const Home = () => {
                             {sub.name}
                           </h3>
                           <ul className="list-disc list-inside space-y-1">
-                            {getSkillsByCategory(sub.id).map((skill) => (
-                              <li key={skill.id} className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 flex items-center">
-                                {skill.icon && iconMap[skill.icon] && (
-                                  <FontAwesomeIcon icon={iconMap[skill.icon]} className="mr-1 text-indigo-400 dark:text-indigo-400" />
-                                )}
-                                {skill.name}
-                              </li>
-                            ))}
+                            {sub.skills && sub.skills.length > 0 ? (
+                              sub.skills.map((skill) => (
+                                <li key={skill.id} className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 flex items-center">
+                                  {skill.icon && iconMap[skill.icon] && (
+                                    <FontAwesomeIcon icon={iconMap[skill.icon]} className="mr-1 text-indigo-400 dark:text-indigo-400" />
+                                  )}
+                                  {skill.name}
+                                </li>
+                              ))
+                            ) : (
+                              <li className="text-xs text-gray-400 dark:text-gray-500">No skills yet</li>
+                            )}
                           </ul>
                         </div>
                       ))
