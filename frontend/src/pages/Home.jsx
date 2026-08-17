@@ -39,7 +39,6 @@ import {
   faBook,
   faFileCode,
   faWind,
-  faGitAlt,
   faPaperPlane,
   faUsers,
   faBookOpen,
@@ -65,6 +64,7 @@ import {
   faBootstrap,
   faGitlab,
   faLinux,
+  faGitAlt,
 } from '@fortawesome/free-brands-svg-icons';
 
 const iconMap = {
@@ -101,7 +101,7 @@ const iconMap = {
   FaBook: faBook,
   FaFileCode: faFileCode,
   FaWind: faWind,
-  FaGitAlt: faGitAlt,
+  faGitAlt: faGitAlt,
   FaPaperPlane: faPaperPlane,
   FaUsers: faUsers,
   FaBookOpen: faBookOpen,

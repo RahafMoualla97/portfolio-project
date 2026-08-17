@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  // Free Solid Icons
   faCode,
   faDatabase,
   faServer,
@@ -46,7 +45,6 @@ import {
   faArrowsAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  // Free Brand Icons
   faPython,
   faJs,
   faReact,
@@ -65,6 +63,7 @@ import {
   faBootstrap,
   faGitlab,
   faLinux,
+  faGitAlt,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   getSkillCategories,
@@ -78,7 +77,6 @@ import {
 } from '../../api/skills';
 
 const iconMap = {
-  // Solid Icons
   FaCode: faCode,
   FaDatabase: faDatabase,
   FaServer: faServer,
@@ -112,7 +110,7 @@ const iconMap = {
   FaBook: faBook,
   FaFileCode: faFileCode,
   FaWind: faWind,
-  FaGitAlt: faGitAlt,
+  faGitAlt: faGitAlt,
   FaPaperPlane: faPaperPlane,
   FaUsers: faUsers,
   FaBookOpen: faBookOpen,
@@ -120,7 +118,6 @@ const iconMap = {
   FaLightbulb: faLightbulb,
   FaComments: faComments,
   FaArrowsAlt: faArrowsAlt,
-  // Brand Icons
   FaPython: faPython,
   FaJs: faJs,
   FaReact: faReact,
@@ -141,9 +138,6 @@ const iconMap = {
   FaLinux: faLinux,
 };
 
-/**
- * AdminSkills component - Manage skill categories and skills.
- */
 const AdminSkills = () => {
   const { token } = useAuth();
   const [categories, setCategories] = useState([]);
@@ -167,7 +161,6 @@ const AdminSkills = () => {
         getSkills(),
       ]);
 
-      // Flatten categories: includes parents + all children
       const allCategories = [];
       const flattenCategories = (cats) => {
         for (const cat of cats) {
@@ -246,9 +239,6 @@ const AdminSkills = () => {
     }
   };
 
-  /**
-   * Get category name by ID, searching in parent and child categories.
-   */
   const getCategoryName = (id) => {
     const cat = categories.find((c) => c.id === id);
     if (cat) return cat.name;
@@ -263,7 +253,6 @@ const AdminSkills = () => {
     <div>
       <h2 className="text-xl font-semibold text-gray-800 mb-6">Skills Management</h2>
 
-      {/* Categories Section */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-700">Categories</h3>
@@ -406,7 +395,6 @@ const AdminSkills = () => {
           </form>
         )}
 
-        {/* Categories List */}
         <div className="grid gap-3">
           {categories.filter((c) => c.parent_id === null).map((cat) => (
             <div key={cat.id} className="bg-white rounded-xl shadow-md p-4">
@@ -436,7 +424,6 @@ const AdminSkills = () => {
                   </button>
                 </div>
               </div>
-              {/* Sub-categories with skills */}
               {categories.filter((c) => c.parent_id === cat.id).length > 0 && (
                 <div className="mt-3 ml-6 border-l-2 border-gray-200 pl-4 space-y-3">
                   {categories.filter((c) => c.parent_id === cat.id).map((sub) => (
@@ -464,7 +451,6 @@ const AdminSkills = () => {
                           </button>
                         </div>
                       </div>
-                      {/* Skills under this sub-category */}
                       {sub.skills && sub.skills.length > 0 && (
                         <ul className="list-disc list-inside ml-6 mt-1 space-y-1">
                           {sub.skills.map((skill) => (
@@ -485,7 +471,6 @@ const AdminSkills = () => {
           ))}
         </div>
 
-        {/* Display sub-categories as standalone items */}
         {categories.filter((c) => c.parent_id !== null).length > 0 && (
           <div className="mt-6">
             <h4 className="text-sm font-semibold text-gray-600 mb-2">All Sub-Categories</h4>
@@ -518,7 +503,6 @@ const AdminSkills = () => {
         )}
       </div>
 
-      {/* Skills Section */}
       <div>
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-700">Skills</h3>
@@ -617,7 +601,6 @@ const AdminSkills = () => {
           </form>
         )}
 
-        {/* Skills List */}
         <div className="grid gap-3">
           {skills.map((skill) => (
             <div key={skill.id} className="bg-white rounded-xl shadow-md p-3 sm:p-4">
