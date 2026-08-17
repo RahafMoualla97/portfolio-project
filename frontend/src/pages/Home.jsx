@@ -137,33 +137,27 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('📡 Starting fetchData...');
-
         const projectsData = await getProjects();
-        console.log('✅ Projects received:', projectsData?.length || 0);
 
         let categoriesData = [];
         try {
           categoriesData = await getSkillCategories();
-          console.log('✅ Skill categories received:', categoriesData?.length || 0);
         } catch (err) {
-          console.warn('⚠️ Failed to fetch skill categories, using empty array:', err.message);
+          console.warn('⚠️ Failed to fetch skill categories:', err.message);
         }
 
         let skillsData = [];
         try {
           skillsData = await getSkills();
-          console.log('✅ Skills received:', skillsData?.length || 0);
         } catch (err) {
-          console.warn('⚠️ Failed to fetch skills, using empty array:', err.message);
+          console.warn('⚠️ Failed to fetch skills:', err.message);
         }
 
         let profileData = null;
         try {
           profileData = await getProfile();
-          console.log('✅ Profile received');
         } catch (err) {
-          console.warn('⚠️ Failed to fetch profile, using null:', err.message);
+          console.warn('⚠️ Failed to fetch profile:', err.message);
         }
 
         const latestPerCategory = [];
@@ -182,20 +176,15 @@ const Home = () => {
                   ...project,
                   categoryName: category.name,
                 });
-                console.log(`➕ Added project "${project.title}" from category "${category.name}"`);
               }
             }
           }
         }
 
-        console.log('📌 Final selected projects for Home:', latestPerCategory);
-
         setProjects(latestPerCategory);
         setSkillCategories(categoriesData);
         setAllSkills(skillsData);
         setProfile(profileData);
-
-        console.log('✅ Home data loaded successfully!');
       } catch (error) {
         console.error('❌ Error fetching data:', error);
       } finally {

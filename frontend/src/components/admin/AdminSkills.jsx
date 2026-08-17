@@ -35,7 +35,6 @@ import {
   faBook,
   faFileCode,
   faWind,
-  faGitAlt,
   faPaperPlane,
   faUsers,
   faBookOpen,
@@ -333,7 +332,7 @@ const AdminSkills = () => {
                   <option value="FaBook">FaBook</option>
                   <option value="FaFileCode">FaFileCode</option>
                   <option value="FaWind">FaWind</option>
-                  <option value="FaGitAlt">FaGitAlt</option>
+                  <option value="faGitAlt">faGitAlt</option>
                   <option value="FaPaperPlane">FaPaperPlane</option>
                   <option value="FaUsers">FaUsers</option>
                   <option value="FaBookOpen">FaBookOpen</option>
