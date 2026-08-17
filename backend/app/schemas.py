@@ -234,13 +234,14 @@ class ProjectResponse(ProjectBase):
 
 class SkillCategoryBase(BaseModel):
     name: str
+    slug: str
     icon: Optional[str] = None
     order: Optional[int] = 0
     parent_id: Optional[int] = None
 
 
 class SkillCategoryCreate(SkillCategoryBase):
-    pass
+    slug: str
 
 
 class SkillCategoryUpdate(BaseModel):
