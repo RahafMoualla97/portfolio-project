@@ -17,6 +17,7 @@ import {
   faMobileAlt,
   faPalette,
   faChartLine,
+  faWrench,
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -48,6 +49,7 @@ const iconMap = {
   FaMobileAlt: faMobileAlt,
   FaPalette: faPalette,
   FaChartLine: faChartLine,
+  FaWrench: faWrench,
   FaPython: faPython,
   FaJs: faJs,
   FaReact: faReact,
