@@ -302,8 +302,8 @@ const Home = () => {
           <div className="max-w-6xl mx-auto px-4">
             <div className="space-y-8">
               {skillCategories.map((category, index) => (
-                <div key={category.id} className="bg-white rounded-xl shadow-md p-4 sm:p-6 hover:shadow-lg transition border border-gray-100 dark:border-gray-600">
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+                <div key={category.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 sm:p-6 hover:shadow-lg transition border border-gray-100 dark:border-gray-700">
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                     {category.icon && iconMap[category.icon] && (
                       <FontAwesomeIcon icon={iconMap[category.icon]} className="mr-2 text-indigo-600 dark:text-indigo-400" />
                     )}
@@ -331,7 +331,7 @@ const Home = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                       {category.children.map((sub) => (
                         <div key={sub.id} className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 sm:p-6 hover:shadow-lg transition border border-gray-100 dark:border-gray-600">
-                          <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 flex items-center">
+                          <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center">
                             {sub.icon && iconMap[sub.icon] && (
                               <FontAwesomeIcon icon={iconMap[sub.icon]} className="mr-2 text-indigo-500 dark:text-indigo-400" />
                             )}
