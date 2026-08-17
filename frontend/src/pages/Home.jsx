@@ -73,6 +73,8 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('📡 Starting fetchData...');
+        
         const [projectsData, categoriesData, skillsData, profileData] = await Promise.all([
           getProjects(),
           getSkillCategories(),
@@ -80,12 +82,26 @@ const Home = () => {
           getProfile().catch(() => null),
         ]);
 
+        console.log('✅ Raw projectsData from API:', projectsData);
+        console.log('✅ Number of projects received:', projectsData?.length || 0);
+
+        // Check if projects have categories
+        if (projectsData && projectsData.length > 0) {
+          console.log('🔍 Checking categories on first project:', projectsData[0].categories);
+        }
+
         const latestPerCategory = [];
         const seenCategories = new Set();
 
         const sortedProjects = [...projectsData].sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
+
+        console.log('📅 Sorted projects (newest first):', sortedProjects.map(p => ({
+          id: p.id,
+          title: p.title,
+          created_at: p.created_at
+        })));
 
         for (const project of sortedProjects) {
           if (project.categories && project.categories.length > 0) {
@@ -96,17 +112,22 @@ const Home = () => {
                   ...project,
                   categoryName: category.name,
                 });
+                console.log(`➕ Added project "${project.title}" from category "${category.name}"`);
               }
             }
           }
         }
+
+        console.log('📌 Final selected projects for Home:', latestPerCategory);
+        console.log('📌 Total categories represented:', seenCategories.size);
+        console.log('📌 Total projects to display:', latestPerCategory.length);
 
         setProjects(latestPerCategory);
         setSkillCategories(categoriesData);
         setAllSkills(skillsData);
         setProfile(profileData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('❌ Error fetching data:', error);
       } finally {
         setLoading(false);
       }
