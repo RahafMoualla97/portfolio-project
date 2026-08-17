@@ -288,7 +288,6 @@ class SkillResponse(SkillBase):
     id: int
     created_at: datetime
     updated_at: Optional[datetime] = None
-    category: Optional[SkillCategoryResponse] = None
 
     class Config:
         from_attributes = True
