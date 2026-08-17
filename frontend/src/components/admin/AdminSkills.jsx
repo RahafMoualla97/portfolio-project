@@ -87,7 +87,7 @@ const AdminSkills = () => {
   const [showSkillForm, setShowSkillForm] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
   const [editingSkill, setEditingSkill] = useState(null);
-  const [categoryForm, setCategoryForm] = useState({ name: '',slug: '', icon: '', parent_id: null, order: 0 });
+  const [categoryForm, setCategoryForm] = useState({ name: '', slug: '', icon: '', parent_id: null, order: 0 });
   const [skillForm, setSkillForm] = useState({ name: '', icon: '', level: 0, order: 0, skill_category_id: '' });
 
   useEffect(() => {
@@ -100,7 +100,20 @@ const AdminSkills = () => {
         getSkillCategories(),
         getSkills(),
       ]);
-      setCategories(categoriesData);
+
+      // ✅ Flatten categories: includes parents + all children
+      const allCategories = [];
+      const flattenCategories = (cats) => {
+        for (const cat of cats) {
+          allCategories.push(cat);
+          if (cat.children && cat.children.length > 0) {
+            flattenCategories(cat.children);
+          }
+        }
+      };
+      flattenCategories(categoriesData);
+
+      setCategories(allCategories);
       setSkills(skillsData);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -117,7 +130,7 @@ const AdminSkills = () => {
       } else {
         await createSkillCategory(categoryForm, token);
       }
-      setCategoryForm({ name: '', icon: '', parent_id: null, order: 0 });
+      setCategoryForm({ name: '', slug: '', icon: '', parent_id: null, order: 0 });
       setEditingCategory(null);
       setShowCategoryForm(false);
       await fetchData();
@@ -173,10 +186,6 @@ const AdminSkills = () => {
   const getCategoryName = (id) => {
     const cat = categories.find((c) => c.id === id);
     if (cat) return cat.name;
-    for (const parent of categories) {
-      const child = parent.children?.find((c) => c.id === id);
-      if (child) return child.name;
-    }
     return 'None';
   };
 
@@ -195,7 +204,7 @@ const AdminSkills = () => {
           <button
             onClick={() => {
               setEditingCategory(null);
-              setCategoryForm({ name: '', icon: '', parent_id: null, order: 0 });
+              setCategoryForm({ name: '', slug: '', icon: '', parent_id: null, order: 0 });
               setShowCategoryForm(true);
             }}
             className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
@@ -206,7 +215,7 @@ const AdminSkills = () => {
 
         {showCategoryForm && (
           <form onSubmit={handleCategorySubmit} className="bg-white rounded-xl shadow-md p-6 mb-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
                 <input
@@ -359,9 +368,9 @@ const AdminSkills = () => {
                         </div>
                       </div>
                       {/* Skills under this sub-category */}
-                      {skills.filter((s) => s.skill_category_id === sub.id).length > 0 && (
+                      {sub.skills && sub.skills.length > 0 && (
                         <ul className="list-disc list-inside ml-6 mt-1 space-y-1">
-                          {skills.filter((s) => s.skill_category_id === sub.id).map((skill) => (
+                          {sub.skills.map((skill) => (
                             <li key={skill.id} className="text-sm text-gray-600">
                               {skill.icon && iconMap[skill.icon] && (
                                 <FontAwesomeIcon icon={iconMap[skill.icon]} className="mr-1 text-indigo-400" />
