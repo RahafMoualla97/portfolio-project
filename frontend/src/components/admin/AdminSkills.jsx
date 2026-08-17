@@ -468,7 +468,7 @@ const AdminSkills = () => {
                           </button>
                         </div>
                       </div>
-                      {sub.skills && sub.skills.length > 0 && (
+                      {sub?.skills && Array.isArray(sub.skills) && sub.skills.length > 0 && (
                         <ul className="list-disc list-inside ml-6 mt-1 space-y-1">
                           {sub.skills.map((skill) => (
                             <li key={skill.id} className="text-sm text-gray-600">
