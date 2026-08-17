@@ -223,10 +223,10 @@ const Home = () => {
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-gray-100">
                 Hi, I'm <span className="text-indigo-600">Rahaf</span>
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-4 md:mb-6">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-6">
                 {profile?.title || 'Python Backend Developer | Odoo ERP Developer | FastAPI | REST APIs'}
               </p>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-8 md:mb-8">
                 {profile?.bio || 'Turning ideas into powerful applications.'}
               </p>
               <div className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-start">
@@ -310,7 +310,6 @@ const Home = () => {
                     {category.name}
                   </h2>
 
-                  {/* Skills directly under this category */}
                   {category.skills && category.skills.length > 0 && (
                     <div className="mb-4">
                       <ul className="list-disc list-inside ml-6 space-y-1">
@@ -326,7 +325,6 @@ const Home = () => {
                     </div>
                   )}
 
-                  {/* Sub-categories with skills */}
                   {category.children && category.children.length > 0 && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                       {category.children.map((sub) => (
