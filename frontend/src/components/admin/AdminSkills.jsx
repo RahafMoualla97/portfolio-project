@@ -248,6 +248,7 @@ const AdminSkills = () => {
                   <option value="FaMobileAlt">FaMobileAlt</option>
                   <option value="FaPalette">FaPalette</option>
                   <option value="FaChartLine">FaChartLine</option>
+                  <option value="FaWrench">FaWrench</option>
                   <option value="FaPython">FaPython</option>
                   <option value="FaJs">FaJs</option>
                   <option value="FaReact">FaReact</option>
