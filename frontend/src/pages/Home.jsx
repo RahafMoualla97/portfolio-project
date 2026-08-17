@@ -19,6 +19,34 @@ import {
   faChartLine,
   faWrench,
   faArrowRight,
+  faPuzzlePiece,
+  faClipboardList,
+  faLink,
+  faTable,
+  faBolt,
+  faLayerGroup,
+  faExchangeAlt,
+  faArchway,
+  faCube,
+  faObjectGroup,
+  faDraftingCompass,
+  faSearch,
+  faPeopleArrows,
+  faNetworkWired,
+  faLock,
+  faCheckCircle,
+  faClock,
+  faBook,
+  faFileCode,
+  faWind,
+  faGitAlt,
+  faPaperPlane,
+  faUsers,
+  faBookOpen,
+  faCrown,
+  faLightbulb,
+  faComments,
+  faArrowsAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faPython,
@@ -34,6 +62,9 @@ import {
   faVuejs,
   faAngular,
   faAws,
+  faBootstrap,
+  faGitlab,
+  faLinux,
 } from '@fortawesome/free-brands-svg-icons';
 
 const iconMap = {
@@ -50,6 +81,34 @@ const iconMap = {
   FaPalette: faPalette,
   FaChartLine: faChartLine,
   FaWrench: faWrench,
+  FaPuzzlePiece: faPuzzlePiece,
+  FaClipboardList: faClipboardList,
+  FaLink: faLink,
+  FaTable: faTable,
+  FaBolt: faBolt,
+  FaLayerGroup: faLayerGroup,
+  FaExchangeAlt: faExchangeAlt,
+  FaArchway: faArchway,
+  FaCube: faCube,
+  FaObjectGroup: faObjectGroup,
+  FaDraftingCompass: faDraftingCompass,
+  FaSearch: faSearch,
+  FaPeopleArrows: faPeopleArrows,
+  FaNetworkWired: faNetworkWired,
+  FaLock: faLock,
+  FaCheckCircle: faCheckCircle,
+  FaClock: faClock,
+  FaBook: faBook,
+  FaFileCode: faFileCode,
+  FaWind: faWind,
+  FaGitAlt: faGitAlt,
+  FaPaperPlane: faPaperPlane,
+  FaUsers: faUsers,
+  FaBookOpen: faBookOpen,
+  FaCrown: faCrown,
+  FaLightbulb: faLightbulb,
+  FaComments: faComments,
+  FaArrowsAlt: faArrowsAlt,
   FaPython: faPython,
   FaJs: faJs,
   FaReact: faReact,
@@ -63,6 +122,9 @@ const iconMap = {
   FaVuejs: faVuejs,
   FaAngular: faAngular,
   FaAws: faAws,
+  FaBootstrap: faBootstrap,
+  FaGitlab: faGitlab,
+  FaLinux: faLinux,
 };
 
 const Home = () => {
@@ -77,11 +139,9 @@ const Home = () => {
       try {
         console.log('📡 Starting fetchData...');
 
-        // 1. Get projects (this always works)
         const projectsData = await getProjects();
         console.log('✅ Projects received:', projectsData?.length || 0);
 
-        // 2. Get skill categories (with fallback to empty array on error)
         let categoriesData = [];
         try {
           categoriesData = await getSkillCategories();
@@ -90,7 +150,6 @@ const Home = () => {
           console.warn('⚠️ Failed to fetch skill categories, using empty array:', err.message);
         }
 
-        // 3. Get skills (with fallback to empty array on error)
         let skillsData = [];
         try {
           skillsData = await getSkills();
@@ -99,7 +158,6 @@ const Home = () => {
           console.warn('⚠️ Failed to fetch skills, using empty array:', err.message);
         }
 
-        // 4. Get profile (with fallback to null on error)
         let profileData = null;
         try {
           profileData = await getProfile();
@@ -108,7 +166,6 @@ const Home = () => {
           console.warn('⚠️ Failed to fetch profile, using null:', err.message);
         }
 
-        // Process projects: show latest one per category
         const latestPerCategory = [];
         const seenCategories = new Set();
 

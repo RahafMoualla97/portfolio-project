@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  // Free Solid Icons
   faCode,
   faDatabase,
   faServer,
@@ -15,8 +16,37 @@ import {
   faPalette,
   faWrench,
   faChartLine,
+  faPuzzlePiece,
+  faClipboardList,
+  faLink,
+  faTable,
+  faBolt,
+  faLayerGroup,
+  faExchangeAlt,
+  faArchway,
+  faCube,
+  faObjectGroup,
+  faDraftingCompass,
+  faSearch,
+  faPeopleArrows,
+  faNetworkWired,
+  faLock,
+  faCheckCircle,
+  faClock,
+  faBook,
+  faFileCode,
+  faWind,
+  faGitAlt,
+  faPaperPlane,
+  faUsers,
+  faBookOpen,
+  faCrown,
+  faLightbulb,
+  faComments,
+  faArrowsAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {
+  // Free Brand Icons
   faPython,
   faJs,
   faReact,
@@ -32,6 +62,9 @@ import {
   faAws,
   faApple,
   faAndroid,
+  faBootstrap,
+  faGitlab,
+  faLinux,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   getSkillCategories,
@@ -45,6 +78,7 @@ import {
 } from '../../api/skills';
 
 const iconMap = {
+  // Solid Icons
   FaCode: faCode,
   FaDatabase: faDatabase,
   FaServer: faServer,
@@ -56,8 +90,37 @@ const iconMap = {
   FaGlobe: faGlobe,
   FaMobileAlt: faMobileAlt,
   FaPalette: faPalette,
-  FaChartLine: faChartLine,
   FaWrench: faWrench,
+  FaChartLine: faChartLine,
+  FaPuzzlePiece: faPuzzlePiece,
+  FaClipboardList: faClipboardList,
+  FaLink: faLink,
+  FaTable: faTable,
+  FaBolt: faBolt,
+  FaLayerGroup: faLayerGroup,
+  FaExchangeAlt: faExchangeAlt,
+  FaArchway: faArchway,
+  FaCube: faCube,
+  FaObjectGroup: faObjectGroup,
+  FaDraftingCompass: faDraftingCompass,
+  FaSearch: faSearch,
+  FaPeopleArrows: faPeopleArrows,
+  FaNetworkWired: faNetworkWired,
+  FaLock: faLock,
+  FaCheckCircle: faCheckCircle,
+  FaClock: faClock,
+  FaBook: faBook,
+  FaFileCode: faFileCode,
+  FaWind: faWind,
+  FaGitAlt: faGitAlt,
+  FaPaperPlane: faPaperPlane,
+  FaUsers: faUsers,
+  FaBookOpen: faBookOpen,
+  FaCrown: faCrown,
+  FaLightbulb: faLightbulb,
+  FaComments: faComments,
+  FaArrowsAlt: faArrowsAlt,
+  // Brand Icons
   FaPython: faPython,
   FaJs: faJs,
   FaReact: faReact,
@@ -73,6 +136,9 @@ const iconMap = {
   FaAws: faAws,
   FaApple: faApple,
   FaAndroid: faAndroid,
+  FaBootstrap: faBootstrap,
+  FaGitlab: faGitlab,
+  FaLinux: faLinux,
 };
 
 /**
@@ -101,7 +167,7 @@ const AdminSkills = () => {
         getSkills(),
       ]);
 
-      // ✅ Flatten categories: includes parents + all children
+      // Flatten categories: includes parents + all children
       const allCategories = [];
       const flattenCategories = (cats) => {
         for (const cat of cats) {
@@ -256,8 +322,36 @@ const AdminSkills = () => {
                   <option value="FaGlobe">FaGlobe</option>
                   <option value="FaMobileAlt">FaMobileAlt</option>
                   <option value="FaPalette">FaPalette</option>
-                  <option value="FaChartLine">FaChartLine</option>
                   <option value="FaWrench">FaWrench</option>
+                  <option value="FaChartLine">FaChartLine</option>
+                  <option value="FaPuzzlePiece">FaPuzzlePiece</option>
+                  <option value="FaClipboardList">FaClipboardList</option>
+                  <option value="FaLink">FaLink</option>
+                  <option value="FaTable">FaTable</option>
+                  <option value="FaBolt">FaBolt</option>
+                  <option value="FaLayerGroup">FaLayerGroup</option>
+                  <option value="FaExchangeAlt">FaExchangeAlt</option>
+                  <option value="FaArchway">FaArchway</option>
+                  <option value="FaCube">FaCube</option>
+                  <option value="FaObjectGroup">FaObjectGroup</option>
+                  <option value="FaDraftingCompass">FaDraftingCompass</option>
+                  <option value="FaSearch">FaSearch</option>
+                  <option value="FaPeopleArrows">FaPeopleArrows</option>
+                  <option value="FaNetworkWired">FaNetworkWired</option>
+                  <option value="FaLock">FaLock</option>
+                  <option value="FaCheckCircle">FaCheckCircle</option>
+                  <option value="FaClock">FaClock</option>
+                  <option value="FaBook">FaBook</option>
+                  <option value="FaFileCode">FaFileCode</option>
+                  <option value="FaWind">FaWind</option>
+                  <option value="FaGitAlt">FaGitAlt</option>
+                  <option value="FaPaperPlane">FaPaperPlane</option>
+                  <option value="FaUsers">FaUsers</option>
+                  <option value="FaBookOpen">FaBookOpen</option>
+                  <option value="FaCrown">FaCrown</option>
+                  <option value="FaLightbulb">FaLightbulb</option>
+                  <option value="FaComments">FaComments</option>
+                  <option value="FaArrowsAlt">FaArrowsAlt</option>
                   <option value="FaPython">FaPython</option>
                   <option value="FaJs">FaJs</option>
                   <option value="FaReact">FaReact</option>
@@ -273,6 +367,9 @@ const AdminSkills = () => {
                   <option value="FaAws">FaAws</option>
                   <option value="FaApple">FaApple</option>
                   <option value="FaAndroid">FaAndroid</option>
+                  <option value="FaBootstrap">FaBootstrap</option>
+                  <option value="FaGitlab">FaGitlab</option>
+                  <option value="FaLinux">FaLinux</option>
                 </select>
               </div>
               <div>
