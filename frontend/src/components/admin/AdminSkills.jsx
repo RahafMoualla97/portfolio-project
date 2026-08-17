@@ -85,7 +85,7 @@ const AdminSkills = () => {
   const [showSkillForm, setShowSkillForm] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
   const [editingSkill, setEditingSkill] = useState(null);
-  const [categoryForm, setCategoryForm] = useState({ name: '', icon: '', parent_id: null, order: 0 });
+  const [categoryForm, setCategoryForm] = useState({ name: '',slug: '', icon: '', parent_id: null, order: 0 });
   const [skillForm, setSkillForm] = useState({ name: '', icon: '', level: 0, order: 0, skill_category_id: '' });
 
   useEffect(() => {
@@ -213,6 +213,17 @@ const AdminSkills = () => {
                   onChange={(e) => setCategoryForm({ ...categoryForm, name: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Slug *</label>
+                <input
+                  type="text"
+                  value={categoryForm.slug}
+                  onChange={(e) => setCategoryForm({ ...categoryForm, slug: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                  placeholder="e.g. technical-skills"
                 />
               </div>
               <div>
