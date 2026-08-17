@@ -42,6 +42,7 @@ import {
   faLightbulb,
   faComments,
   faArrowsAlt,
+  faCodeBranch,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faPython,
@@ -117,6 +118,7 @@ const iconMap = {
   FaLightbulb: faLightbulb,
   FaComments: faComments,
   FaArrowsAlt: faArrowsAlt,
+  FaCodeBranch: faCodeBranch,
   FaPython: faPython,
   FaJs: faJs,
   FaReact: faReact,
@@ -339,6 +341,7 @@ const AdminSkills = () => {
                   <option value="FaLightbulb">FaLightbulb</option>
                   <option value="FaComments">FaComments</option>
                   <option value="FaArrowsAlt">FaArrowsAlt</option>
+                  <option value="FaCodeBranch">FaCodeBranch</option>
                   <option value="FaPython">FaPython</option>
                   <option value="FaJs">FaJs</option>
                   <option value="FaReact">FaReact</option>
@@ -561,6 +564,7 @@ const AdminSkills = () => {
                   <option value="FaLightbulb">FaLightbulb</option>
                   <option value="FaComments">FaComments</option>
                   <option value="FaArrowsAlt">FaArrowsAlt</option>
+                  <option value="FaCodeBranch">FaCodeBranch</option>
                   <option value="FaPython">FaPython</option>
                   <option value="FaJs">FaJs</option>
                   <option value="FaReact">FaReact</option>
