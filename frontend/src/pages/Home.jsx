@@ -104,7 +104,7 @@ const iconMap = {
   faGitAlt: faGitAlt,
   FaPaperPlane: faPaperPlane,
   FaUsers: faUsers,
-  FaBookOpen: faBookOpen,
+  faBookOpen: faBookOpen,
   FaCrown: faCrown,
   FaLightbulb: faLightbulb,
   FaComments: faComments,
@@ -193,10 +193,6 @@ const Home = () => {
     };
     fetchData();
   }, []);
-
-  const getSkillsByCategory = (categoryId) => {
-    return allSkills.filter((skill) => skill.skill_category_id === categoryId);
-  };
 
   if (loading) {
     return (
