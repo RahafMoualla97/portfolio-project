@@ -74,34 +74,45 @@ const Home = () => {
     const fetchData = async () => {
       try {
         console.log('📡 Starting fetchData...');
-        
-        const [projectsData, categoriesData, skillsData, profileData] = await Promise.all([
-          getProjects(),
-          getSkillCategories(),
-          getSkills(),
-          getProfile().catch(() => null),
-        ]);
 
-        console.log('✅ Raw projectsData from API:', projectsData);
-        console.log('✅ Number of projects received:', projectsData?.length || 0);
+        // 1. Get projects (this always works)
+        const projectsData = await getProjects();
+        console.log('✅ Projects received:', projectsData?.length || 0);
 
-        // Check if projects have categories
-        if (projectsData && projectsData.length > 0) {
-          console.log('🔍 Checking categories on first project:', projectsData[0].categories);
+        // 2. Get skill categories (with fallback to empty array on error)
+        let categoriesData = [];
+        try {
+          categoriesData = await getSkillCategories();
+          console.log('✅ Skill categories received:', categoriesData?.length || 0);
+        } catch (err) {
+          console.warn('⚠️ Failed to fetch skill categories, using empty array:', err.message);
         }
 
+        // 3. Get skills (with fallback to empty array on error)
+        let skillsData = [];
+        try {
+          skillsData = await getSkills();
+          console.log('✅ Skills received:', skillsData?.length || 0);
+        } catch (err) {
+          console.warn('⚠️ Failed to fetch skills, using empty array:', err.message);
+        }
+
+        // 4. Get profile (with fallback to null on error)
+        let profileData = null;
+        try {
+          profileData = await getProfile();
+          console.log('✅ Profile received');
+        } catch (err) {
+          console.warn('⚠️ Failed to fetch profile, using null:', err.message);
+        }
+
+        // Process projects: show latest one per category
         const latestPerCategory = [];
         const seenCategories = new Set();
 
         const sortedProjects = [...projectsData].sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
-
-        console.log('📅 Sorted projects (newest first):', sortedProjects.map(p => ({
-          id: p.id,
-          title: p.title,
-          created_at: p.created_at
-        })));
 
         for (const project of sortedProjects) {
           if (project.categories && project.categories.length > 0) {
@@ -119,13 +130,13 @@ const Home = () => {
         }
 
         console.log('📌 Final selected projects for Home:', latestPerCategory);
-        console.log('📌 Total categories represented:', seenCategories.size);
-        console.log('📌 Total projects to display:', latestPerCategory.length);
 
         setProjects(latestPerCategory);
         setSkillCategories(categoriesData);
         setAllSkills(skillsData);
         setProfile(profileData);
+
+        console.log('✅ Home data loaded successfully!');
       } catch (error) {
         console.error('❌ Error fetching data:', error);
       } finally {
